@@ -250,14 +250,14 @@ function Home() {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
-        ${Object.entries(datosEmail).map(item => `
+                      ${(`     <tbody>
+       ${Object.entries(datosEmail).map(item => `
                     <tr style="background-color: rgba(0, 0, 0, 0.1);">
                         <td colspan="2" style="padding: 15px; font-weight: bold; background-color: #4b5563;  color: white;">
                             ${item[0]}
                         </td>
                     </tr>
-                    ${Object.entries(item[1]).map(i => `<tr style="background-color: white; border-bottom: 1px solid #e5e7eb;">
+                ${Object.entries(item[1]).map(i => `<tr style="background-color: white; border-bottom: 1px solid #e5e7eb;">
                             <td style="padding: 15px; background-color: rgba(0, 0, 0, 0.1); font-weight: bold; color: #1f2937;">
                                 ${i[0]}
                             </td>
@@ -266,7 +266,7 @@ function Home() {
                             </td>
                     </tr>`)}
               `)}  
-              </tbody>
+              </tbody>`).replaceAll('</tr>,', '</tr>')}
             </table>
         </main>`)
 

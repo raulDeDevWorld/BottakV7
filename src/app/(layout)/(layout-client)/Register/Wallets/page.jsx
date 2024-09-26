@@ -20,7 +20,7 @@ import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 function Home() {
 
-    const { nav, setNav, user, userDB, countries, setUserProfile, select, setDestinatario, isSelect3, setIsSelect3, isSelect4, setIsSelect4, select3, setSelect3, setSelect, select2, setSelect2, isSelect, setIsSelect, isSelect2, setIsSelect2, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, modal, setModal, setTransferencia, transferencia, divisas, setDivisas, destinatario, qr, setQr, QRurl, setQRurl, } = useUser()
+    const { nav, setNav, user, userDB, countries, setUserProfile, select,wallets, setDestinatario, isSelect3, setIsSelect3, isSelect4, setIsSelect4, select3, setSelect3, setSelect, select2, setSelect2, isSelect, setIsSelect, isSelect2, setIsSelect2, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, modal, setModal, setTransferencia, transferencia, divisas, setDivisas, destinatario, qr, setQr, QRurl, setQRurl, } = useUser()
     const [cca3, setCca3] = useState(null)
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -120,8 +120,12 @@ function Home() {
             redirectHandler('/Confirm', destinatarioDB)
             setModal('')
         }
-        writeUserData(`users/${user.uid}/destinatarios/${uuid}`, { ...destinatario, uuid }, setUserSuccess, callback)
+        writeUserData(`users/${user.uid}/wallets/${uuid}`, { ...destinatario, uuid }, setUserSuccess, callback)
     }
+
+
+
+    console.log(userDB)
     return (
         <div className='md:pl-5'>
             <form className='w-full min-h-[80vh] space-y-6 lg:grid lg:grid-cols-2 lg:gap-5  rounded-[5px] md:max-h-[80vh] overflow-y-auto overflow-x-hidden' onSubmit={save}>
@@ -150,7 +154,7 @@ function Home() {
                 </div> */}
                 <div className=' space-y-5'>
                     <Label htmlFor="">Red</Label>
-                    <SelectSimple name="pais" propHandlerIsSelect={() => ''} defaul={'TRON'} propIsSelect={isSelect3} operation="envio" arr={['TRON', 'ERC-20', "TRC-20"]} click={handlerCountrySelect} />
+                    <SelectSimple name="pais" propHandlerIsSelect={() => ''} defaul={'Seleccionar'} propIsSelect={isSelect3} operation="envio" arr={Object.values(wallets).map(i=>i.network)} click={handlerCountrySelect} />
                 </div>
                 {/* <div className=' space-y-5'>
                 <Label htmlFor="">Dirección</Label>
@@ -161,10 +165,10 @@ function Home() {
                 <Input type="text" name="celular" onChange={onChangeHandler} required />
             </div> */}
                 <div className=' space-y-5'>
-                    <Label htmlFor="">Direccion de billtera o QR de recepcion de crypto</Label>
+                    <Label htmlFor="">Direccion de billtera o QR</Label>
                     <Input type="text" name="cuenta destinatario" onChange={onChangeHandler} required />
 
-   <div className=' space-y-5'>
+                    <div className=' space-y-5'>
                         {/* <Label htmlFor="">Baucher de transferencia</Label> */}
                         <div className="w-full flex justify-center">
                             <label htmlFor="file" className="flex justify-center items-center w-[300px] min-h-[300px] bg-white border border-gray-300 border-dotted text-center text-gray-900 text-[14px] focus:ring-blue-500 focus:border-blue-500 rounded-[10px]" >
@@ -175,17 +179,18 @@ function Home() {
                         </div>
                     </div>
 
-
+    <div className='flex w-full justify-around items-end'>
+                        <Button theme='Primary' >Guardar</Button>
+                    </div>
                 </div>
-           
-                {destinatario !== undefined && destinatario.pais !== undefined && countries[cca3].countries !== undefined && cca3 && <>
+
+                {/* {destinatario !== undefined && destinatario.pais !== undefined && countries[cca3].countries !== undefined && cca3 && <>
                     <div className='lg:hidden'>
                         <h3 className='text-center pb-3  text-green-400 lg:hidden'>Informacion Bancaria</h3>
                     </div>
                     <div className=' space-y-5'>
                         <Label htmlFor="">Seleccionar Banco</Label>
                         <SelectBank name="nombre de banco" propHandlerIsSelect={handlerIsSelect4} propIsSelect={isSelect4} operation="envio" click={handlerBankSelect} arr={Object.values(countries[cca3].countries)} />
-                        {/* <Input type="text" name="nombre de banco" onChange={onChangeHandler} required /> */}
                     </div>
                     <div className=' space-y-5'>
                         <Label htmlFor="">Numero de cuenta bancaria</Label>
@@ -194,7 +199,8 @@ function Home() {
                     <div className='flex w-full justify-around items-end'>
                         <Button theme='Primary' >Guardar</Button>
                     </div>
-                </>}
+                </>} */}
+              
                 {success == 'CompletePais' && <Msg>Seleccione un pais</Msg>}
             </form>
         </div>

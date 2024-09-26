@@ -245,7 +245,7 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            {wallets && wallets !== undefined && Object.values(wallets).sort(sortArray2).map((i, index) => {
+            {wallets && wallets !== undefined && Object.values(wallets).map((i, index) => {
               return<tr className={`text-[14px] border-b hover:bg-gray-100  ${index % 2 === 0 ? '' : ''} `} key={index}>
          
          <td className="px-3 py-4 text-gray-900 ">
